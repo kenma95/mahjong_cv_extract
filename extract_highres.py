@@ -12,16 +12,17 @@ from matplotlib import pyplot as plt
 input_name = "multiple2.jpg"
 
 
-def preprocess(image):
-    gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-    blurred = cv2.GaussianBlur(gray, (7, 7), 0)
-    threshold = cv2.adaptiveThreshold(blurred, 255, 1, 1,5, 3)
+def thresholding(image):
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blurred = cv2.GaussianBlur(gray, (25, 25), 0)
+    threshold = cv2.adaptiveThreshold(blurred, 255, 1, 1,7, 2)
     threshold = cv2.bitwise_not(threshold)
     return threshold
 
 def crop(img, rect,box):
-    mult = 1
+    #A method of cropping the rotated bounding box
     #https://stackoverflow.com/questions/37177811/crop-rectangle-returned-by-minarearect-opencv-python
+    mult = 1    #the zoom out size of the cropped window, 1 means original
     W = rect[1][0]
     H = rect[1][1]
     Xs = [i[0] for i in box]
@@ -90,9 +91,13 @@ def seperate(erosion,im):
     cv2.imwrite("canvas.jpg", canvas)
     cv2.imwrite("rec2.jpg", temp2)
     cv2.imwrite("rec1.jpg", temp)
+    
+    
+    
+
 im = cv2.imread(input_name)
 
-thresh = preprocess(im)
+thresh = thresholding(im)
 # noise removal
 kernel = np.ones((19,19),np.uint8)
 

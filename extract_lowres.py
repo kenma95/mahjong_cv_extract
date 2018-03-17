@@ -2,8 +2,13 @@
 """
 Created on Tue Mar 13 16:10:41 2018
 
+Deprecated
+This is a develop version to run the extraction on low res(640*480)
+tile image. Still functional but not the latest
+
 @author: kenma
 """
+
 
 import numpy as np
 import cv2
@@ -15,10 +20,6 @@ def preprocess(image):
 	threshold = cv2.adaptiveThreshold(blurred, 255, 1, 1, 3, 5)
 	return threshold
 
-def save_binary(img,img_name):
-    img[img==0]=255
-    img[img==1]=0
-    cv2.imwrite(img_name+".jpg", img)
 
 def crop(img, rect):
     mult = 1
